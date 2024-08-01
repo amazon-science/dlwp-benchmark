@@ -1,0 +1,5 @@
+batch_size: 16
+noise: 0.0
+sequence_length: 50
+teacher_forcing_steps: 15
+dataset_name: ${data.test_set_name}

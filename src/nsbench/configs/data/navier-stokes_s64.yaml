@@ -1,0 +1,11 @@
+type: NavierStokesDataset
+path: data/netcdf/navier-stokes/
+train_set_name: ns_r1e+03_n1000_t50_s64.nc
+val_set_name: ns_r1e+03_n50_t50_s64.nc
+test_set_name: ns_r1e+03_n200_t50_s64.nc
+normalize: false
+num_workers: 2
+drop_last: false
+height: 64
+width: 64
+downscale_factor: 1

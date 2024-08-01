@@ -1,0 +1,5 @@
+batch_size: 16
+noise: 1e-2
+sequence_length: 50
+teacher_forcing_steps: 10
+dataset_name: ${data.validation_set_name}

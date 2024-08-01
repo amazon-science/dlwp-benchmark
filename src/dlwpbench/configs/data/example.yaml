@@ -1,0 +1,25 @@
+_target_: data.datasets.WeatherBenchDataset
+type: WeatherBenchDataset
+data_path: data/zarr/weatherbench_hpx8/
+engine: zarr
+train_start_date: 1979-01-02
+train_stop_date: 2014-12-31
+val_start_date: 2015-01-01
+val_stop_date: 2016-12-31
+test_start_date: 2017-01-01
+test_stop_date: 2018-12-31
+timedelta: 6  # Hours
+init_dates: null
+normalize: true
+num_workers: 2
+drop_last: false
+height: 32
+width: 64
+sequence_length: None  # Overridden by training/validation/testing config
+downscale_factor: 1
+context_size: ${model.context_size}
+constant_names: []
+prescribed_variable_names: []
+prognostic_variable_names_and_levels:
+  # Specify [] for variables without levels and uncomment variables when not using them
+  t2m: []                   # 2m_temperature

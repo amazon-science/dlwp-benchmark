@@ -1,0 +1,27 @@
+type: MeshGraphNet
+name: test
+constant_channels: 4
+prescribed_channels: 1
+prognostic_channels: 8
+input_dim_edges: 2
+context_size: 1
+processor_size: 4
+message_passing_steps: 1
+num_layers_node_processor: 2
+num_layers_edge_processor: 2
+hidden_dim_processor: 34
+hidden_dim_node_encoder: 32
+num_layers_node_encoder: 2
+hidden_dim_edge_encoder: 32
+num_layers_edge_encoder: 2
+hidden_dim_node_decoder: 32
+num_layers_node_decoder: 2
+aggregation: sum
+do_concat_trick: false
+num_processor_checkpoint_segments: 0
+graph_type: delaunay  # any of [grid_2d, grid_2d_8stencil, delaunay]
+device: ${device}
+graph:
+  height: ${data.height}
+  width: ${data.width}
+  periodic: true

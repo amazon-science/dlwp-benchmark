@@ -1,0 +1,25 @@
+# Plotting files
+*.png
+*.mp4
+*.pdf
+
+# Tensorboard model checkpoints and training progress files
+*.ckpt
+*events.*
+
+# Data formats
+*.mat
+*.np
+*.nc
+*.zarr
+
+# Directories
+*__pycache__*
+*outputs/*
+*plots/*
+
+# Python and pytorch files
+*.pyc
+
+# Apple Finder files
+*.DS_Store

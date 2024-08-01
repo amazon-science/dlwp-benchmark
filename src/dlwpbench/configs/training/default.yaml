@@ -1,0 +1,10 @@
+epochs: 30
+learning_rate: 0.001
+clip_gradients: True
+batch_size: 16
+gradient_accumulation_steps: 1
+noise: 0.0
+sequence_length: 5
+save_model: true
+continue_training: false
+dataset_name: ${data.training_set_name}

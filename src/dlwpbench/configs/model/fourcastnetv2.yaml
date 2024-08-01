@@ -1,0 +1,23 @@
+type: FourCastNetv2
+name: test
+img_height: ${data.height}
+img_width: ${data.width}
+patch_size: [1, 1]
+constant_channels: 4
+prescribed_channels: 1
+prognostic_channels: 8
+spectral_transform: "sht"
+grid: "legendre-gauss"
+num_layers: 4
+scale_factor: 1
+embed_dim: 64
+factorization: null
+rank: 1.0
+drop_rate: 0.0
+hard_thresholding_fraction: 1.0
+operator_type: "driscoll-healy"
+context_size: 1
+big_skip: False
+use_pos_embed: True
+use_mlp: False
+normalization_layer: instance_norm

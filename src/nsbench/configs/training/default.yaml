@@ -1,0 +1,10 @@
+epochs: 500
+learning_rate: 0.001
+clip_gradients: True
+batch_size: 16
+noise: 1e-2
+sequence_length: 50
+teacher_forcing_steps: 10
+save_model: true
+continue_training: false
+dataset_name: ${data.training_set_name}

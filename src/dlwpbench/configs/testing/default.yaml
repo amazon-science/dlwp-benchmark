@@ -1,0 +1,4 @@
+batch_size: 256
+noise: 0.0
+sequence_length: 57
+dataset_name: ${data.test_set_name}

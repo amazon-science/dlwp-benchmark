@@ -1,0 +1,19 @@
+type: SFNO2DModule
+name: test
+constant_channels: 4
+prescribed_channels: 1
+prognostic_channels: 8
+grid: "equiangular"  # any of "equiangular", "lobatto", "legendre-gauss"
+num_layers: 4
+scale_factor: 1
+embed_dim: 256
+rank: 1
+context_size: 1
+height: ${data.height}
+width: ${data.width}
+hard_thresholding_fraction: 1.0
+factorization: null
+big_skip: True
+pos_embed: True
+use_mlp: True
+normalization_layer: none

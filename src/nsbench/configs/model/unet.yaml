@@ -1,0 +1,9 @@
+type: UNet
+name: unet_8-16-32
+in_channels: 1
+hidden_channels: [8, 32, 32]
+out_channels: 1
+n_convolutions: 2
+activation: th.nn.ReLU()
+padding_mode: zeros
+context_size: 2

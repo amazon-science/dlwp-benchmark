@@ -1,0 +1,43 @@
+_target_: data.datasets.WeatherBenchDataset
+type: WeatherBenchDataset
+data_path: data/zarr/weatherbench/
+engine: zarr
+train_start_date: 1979-01-02
+train_stop_date: 2014-12-31
+val_start_date: 2015-01-01
+val_stop_date: 2016-12-31
+test_start_date: 2017-01-01
+test_stop_date: 2018-12-31
+timedelta: 6  # Hours
+init_dates: null
+normalize: true
+num_workers: 2
+drop_last: false
+height: 32
+width: 64
+sequence_length: None  # Overridden by training/validation/testing config
+downscale_factor: 1
+context_size: ${model.context_size}
+constant_names:
+  - orography
+  - lsm   # land-sea mask
+  #- slt   # soil type
+  - lat2d
+  - lon2d
+prescribed_variable_names: #[]
+  - tisr  # top of atmosphere incoming solar radiation, i.e., toa_incident_solar_radiation
+prognostic_variable_names_and_levels:
+  # Specify [] for variables without levels and uncomment variables when not using them
+  pv: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                 # potential_vorticity
+  q: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                  # specific_humidity
+  r: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                  # relative_humidity
+  t: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                  # temperature
+  t2m: []                   # 2m_temperature
+  #tcc: []                   # total_cloud_cover
+  u: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                  # u_component_of_wind
+  u10: []                   # 10m_u_component_of_wind
+  v: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                  # v_component_of_wind
+  v10: []                   # 10m_v_component_of_wind
+  vo: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]                 # vorticity
+  z: [50, 100, 150, 200, 250, 300, 400, 500, 600, 700, 850, 925, 1000]  # geopotential
+  #z500: []                  # geopotential_500

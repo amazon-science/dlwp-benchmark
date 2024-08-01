@@ -1,0 +1,5 @@
+batch_size: 16
+gradient_accumulation_steps: 1
+noise: 0.0
+sequence_length: 5
+dataset_name: ${data.validation_set_name}

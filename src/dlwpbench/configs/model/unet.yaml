@@ -1,0 +1,9 @@
+type: UNet
+name: test
+constant_channels: 4
+prescribed_channels: 1
+prognostic_channels: 8
+hidden_channels: [8, 16, 32, 64]
+n_convolutions: 2
+activation: th.nn.ReLU()
+context_size: 1

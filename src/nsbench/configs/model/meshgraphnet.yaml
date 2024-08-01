@@ -1,0 +1,26 @@
+type: MeshGraphNet
+name: mgn2res_edir_cntxt2_p2_l2_d128_bs1_sl3
+input_dim_nodes: 1
+input_dim_edges: 2
+output_dim: 1
+context_size: 10
+processor_size: 2
+message_passing_steps: 1
+num_layers_node_processor: 2
+num_layers_edge_processor: 2
+hidden_dim_processor: 32
+hidden_dim_node_encoder: 32
+num_layers_node_encoder: 2
+hidden_dim_edge_encoder: 32
+num_layers_edge_encoder: 2
+hidden_dim_node_decoder: 32
+num_layers_node_decoder: 2
+aggregation: sum
+do_concat_trick: false
+num_processor_checkpoint_segments: 0
+graph_type: grid_2d
+device: ${device}
+graph:
+  height: ${data.height}
+  width: ${data.width}
+  periodic: true

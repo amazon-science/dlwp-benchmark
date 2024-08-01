@@ -1,0 +1,19 @@
+type: FourCastNet
+name: test
+img_height: ${data.height}
+img_width: ${data.width}
+patch_size: [1, 1]
+constant_channels: 4
+prescribed_channels: 1
+prognostic_channels: 8
+embed_dim: 64
+filter: AFNO2D
+depth: 4
+mlp_ratio: 4.0
+drop_rate: 0.0
+drop_path_rate: 0.0
+num_blocks: 4
+sparsity_threshold: 0.01
+hard_thresholding_fraction: 1.0
+context_size: 1
+use_pos_embed: True

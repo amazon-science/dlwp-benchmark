@@ -1,0 +1,16 @@
+type: FourCastNet
+name: fcnet_res_ps4x4_emb64_noise1e-2_r256_bs2
+img_height: ${data.height}
+img_width: ${data.width}
+patch_size: [4, 4]
+in_chans: 1
+out_chans: 1
+embed_dim: 64
+depth: 4
+mlp_ratio: 4.0
+drop_rate: 0.0
+drop_path_rate: 0.0
+num_blocks: 4
+sparsity_threshold: 0.01
+hard_thresholding_fraction: 1.
+context_size: 2

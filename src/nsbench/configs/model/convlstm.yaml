@@ -1,0 +1,9 @@
+type: ConvLSTM
+name: convlstm_enc_16-16_dec_circular
+batch_size: ${training.batch_size}
+input_size: 1
+hidden_sizes: [16, 16]
+height: ${data.height}
+width: ${data.width}
+device: ${device}
+bias: true

@@ -1,0 +1,42 @@
+[project]
+name = "Deep-Learning-Weather-Prediction-Benchmark"
+version = "0.0.1"
+authors = [
+  { name="Matthias Karlbauer", email="matthias.karlbauer@uni-tuebingen.de" }
+]
+description = "Package to benchmark various deep learning architecture on Navier-Stokes and the WeatherBench datasets."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+	"torch==2.2.1",
+  "torchvision==0.17.1",
+  "torchinfo",
+  "numpy==1.26",
+  "hydra-core",
+  "tensorboard",
+  "xarray[complete]",
+  "tqdm",
+  "einops",
+  "timm",
+  "dgl",
+  "s3fs",
+  "scikit-learn",
+  "ecmwflibs",
+  "healpy",
+  "reproject",
+  "pydantic"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dlwpbench"]
+
+[project.urls]
+Homepage = "https://github.com/"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
