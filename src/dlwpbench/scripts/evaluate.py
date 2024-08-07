@@ -433,7 +433,6 @@ def plot_acc_over_time(
             if not os.path.exists(acc_path): continue
             acc = xr.open_dataset(acc_path)[vname]
             x_range = np.arange(start=dt, stop=len(acc)*dt + 1, step=dt) / 24
-            print(x_range)
             if model_name in list(MODEL_NAME_PLOT_ARGS.keys()): kwargs = MODEL_NAME_PLOT_ARGS[model_name]
             else: kwargs = {"label": model_name}
             ax.plot(x_range, acc, **kwargs)
