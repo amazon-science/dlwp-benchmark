@@ -193,18 +193,6 @@ def evaluate_model(cfg: DictConfig, file_path: str, dataset: WeatherBenchDataset
         inits = th.cat(inits).numpy()
         outputs = th.cat(outputs).numpy()
         targets = th.cat(targets).numpy()
-
-
-
-
-
-    inits = inits[:5]
-    outputs = outputs[:5, :4]
-    targets = targets[:5, :4]
-
-
-
-
     
     # Undo normalization per variable and level
     if cfg.data.normalize:
@@ -277,16 +265,7 @@ def build_dataset(
 
     # Set up netCDF dataset
     coords = {}
-    #coords["sample"] = init_dates
-
-
-
-
-    coords["sample"] = init_dates[:5]
-    
-
-
-
+    coords["sample"] = init_dates
     coords["time"] = timedeltas
     coords["lat"] = np.array(np.arange(start=(-90+(5.625/2)), stop=90, step=deg), dtype=np.float32)
     coords["lon"] = np.array(np.arange(start=0, stop=360, step=deg), dtype=np.float32)
@@ -336,24 +315,18 @@ def build_dataset(
         os.path.join(file_path, "inits.nc"),
         compress_dict,
     ))
-    t1.start()
-    t1.join()
     t2 = threading.Thread(target=write_to_file, args=(
         xr.Dataset(coords=coords, data_vars=outputs_dict).chunk(chunkdict),
         os.path.join(file_path, "outputs.nc"),
         compress_dict,
     ))
-    t2.start()
-    t2.join()
     t3 = threading.Thread(target=write_to_file, args=(
         xr.Dataset(coords=coords, data_vars=targets_dict).chunk(chunkdict),
         os.path.join(file_path, "targets.nc"),
         compress_dict,
     ))
-    t3.start()
-    t3.join()
-    #t1.start(); t2.start(); t3.start()
-    #t1.join(); t2.join(); t3.join()
+    t1.start(); t2.start(); t3.start()
+    t1.join(); t2.join(); t3.join()
 
     print("\tDatasets successfully written to file\n")
 
