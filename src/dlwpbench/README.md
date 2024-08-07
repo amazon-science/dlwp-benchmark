@@ -38,12 +38,12 @@ Download the 5.625 degree data from the [TUM server](https://dataserv.ub.tum.de/
 > Exemplarily, download the `2m_temperature` field via command line, uncompress it, and move it to the correct directory with
 > ```
 > mkdir -p data/netcdf/weatherbench
-> rsync -P rsync://m1524895@dataserv.ub.tum.de/m1524895/5.625deg/2m_temperature/2m_temperature_5.625deg.zip data/netcdf/weatherbench/2m_tmperature
+> rsync -P rsync://m1524895@dataserv.ub.tum.de/m1524895/5.625deg/2m_temperature/2m_temperature_5.625deg.zip data/netcdf/weatherbench/2m_tmperature_5.625deg.zip
 > ```
 > enter password `m1524895`
 > ```
-> unzip 2m_temperature.zip -d data/netcdf/weatherbench/2m_temperature
-> rm 2m_temperature.zip
+> unzip data/netcdf/weatherbench/2m_temperature_5.625deg.zip -d data/netcdf/weatherbench/2m_temperature_5.625deg
+> rm data/netcdf/weatherbench/2m_temperature_5.625.zip
 > ```
 
 The entire dataset with `250GB` can be downloaded from [https://dataserv.ub.tum.de/s/m1524895/download?path=/5.625deg&files=all_5.625deg.zip](https://dataserv.ub.tum.de/s/m1524895/download?path=/5.625deg&files=all_5.625deg.zip)
@@ -78,12 +78,12 @@ conda activate dlwpbench
 
 Model training can be invoked via the training script, e.g., calling
 ```
-python scripts/train.py model=unet model.name=unet_example data=example training.epochs=10 device=cuda:0 data=example model.constant_channels=0 model.prescribed_channels=0 model.prognostic_channels=1
+python scripts/train.py model=unet model.type=UNetHPX model.name=unet_hpx_example data=example training.epochs=10 device=cuda:0 data=example model.constant_channels=0 model.prescribed_channels=0 model.prognostic_channels=1
 ```
-to train an exemplary U-Net on `2m_temperature` in the HEALPix projection.
+to train an exemplary U-Net on `2m_temperature` on the HEALPix projection.
 
 > [!Note]
-> Running the command above will require the `2m_temperature` variable converted to `zarr` and projected to HEALPix, as descrobed in the Data section.
+> Running the command above will require the `2m_temperature` variable converted to `zarr` and projected to HEALPix, as descrobed in the Data section. Also, make sure to follow the naming convention of the data directory tree above, i.e., remove `5.625deg` from the `2m_temperature_5.625deg` directory name.
 
 > [!Note]
 > GraphCast requires a pre-generated `icosahedral.json` file, which specifies the mesh on which the model operates. These files can be generated using the [icospheres.py](models/graphcast/utils/icospheres.py) script for arbitrary mesh resolutions (number of hierarchical levels) and must be linked in GraphCast's [config.yaml](configs/model/graphcast.yaml) file. Originally GraphCast uses six levels, but here it must be reduced to three due to the smaller resolution of the 5.625° WeatherBench data.
@@ -120,9 +120,9 @@ gcast16m_p4_b1_d565_v2
 
 To evaluate a successfully trained model, run
 ```
-python scripts/evaluate.py -c outputs/unet_example
+python scripts/evaluate.py -c outputs/unet_hpx_example
 ```
-The model.name must be provided as -c argument. The evaluation script will compute the ACC and RMSE metrics and write them to `outputs/unet_example/evaluation/`, create an RMSE-over-leadtime plot called `rmse_plot.pdf` in the `.` directory, and write a video to the `outputs/unet_example/evaluation/videos/` directory.
+The model.name must be provided as -c argument. The evaluation script will compute the ACC and RMSE metrics and write them to `outputs/unet_hpx_example/evaluation/`, create an RMSE-over-leadtime plot called `rmse_plot.pdf` in the `.` directory, and write a video to the `outputs/unet_hpx_example/evaluation/videos/` directory.
 
 More plots in line with the paper can be generated with the [plot_results.py](scripts/plot_results.py) script, which requires the installation of the `cartopy` package.
 

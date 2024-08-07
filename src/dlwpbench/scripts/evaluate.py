@@ -193,6 +193,18 @@ def evaluate_model(cfg: DictConfig, file_path: str, dataset: WeatherBenchDataset
         inits = th.cat(inits).numpy()
         outputs = th.cat(outputs).numpy()
         targets = th.cat(targets).numpy()
+
+
+
+
+
+    inits = inits[:5]
+    outputs = outputs[:5, :4]
+    targets = targets[:5, :4]
+
+
+
+
     
     # Undo normalization per variable and level
     if cfg.data.normalize:
@@ -265,7 +277,16 @@ def build_dataset(
 
     # Set up netCDF dataset
     coords = {}
-    coords["sample"] = init_dates
+    #coords["sample"] = init_dates
+
+
+
+
+    coords["sample"] = init_dates[:5]
+    
+
+
+
     coords["time"] = timedeltas
     coords["lat"] = np.array(np.arange(start=(-90+(5.625/2)), stop=90, step=deg), dtype=np.float32)
     coords["lon"] = np.array(np.arange(start=0, stop=360, step=deg), dtype=np.float32)
@@ -303,7 +324,6 @@ def build_dataset(
     def write_to_file(ds: xr.Dataset, dst_path_name: str, compress_dict: dict):
         if os.path.exists(dst_path_name): os.remove(dst_path_name)  # Delete file if it exists
         print(f"\tWriting to {dst_path_name}")
-        ds.to_netcdf(f"rand{randint}.nc", compute=False, encoding=compress_dict)
         if "outputs" in dst_path_name:  # Display progress bar when writing the targets.nc to file
             write_job = ds.to_netcdf(dst_path_name, compute=False, encoding=compress_dict)
             with ProgressBar(): write_job.compute()
@@ -316,18 +336,24 @@ def build_dataset(
         os.path.join(file_path, "inits.nc"),
         compress_dict,
     ))
+    t1.start()
+    t1.join()
     t2 = threading.Thread(target=write_to_file, args=(
         xr.Dataset(coords=coords, data_vars=outputs_dict).chunk(chunkdict),
         os.path.join(file_path, "outputs.nc"),
         compress_dict,
     ))
+    t2.start()
+    t2.join()
     t3 = threading.Thread(target=write_to_file, args=(
         xr.Dataset(coords=coords, data_vars=targets_dict).chunk(chunkdict),
         os.path.join(file_path, "targets.nc"),
         compress_dict,
     ))
-    t1.start(); t2.start(); t3.start()
-    t1.join(); t2.join(); t3.join()
+    t3.start()
+    t3.join()
+    #t1.start(); t2.start(); t3.start()
+    #t1.join(); t2.join(); t3.join()
 
     print("\tDatasets successfully written to file\n")
 
@@ -394,7 +420,7 @@ def generate_mp4(
             plt.close()
 
         # Generate a video from the just generated frames with ffmpeg
-        subprocess.run(["/usr/bin/ffmpeg",
+        subprocess.run(["ffmpeg",  #"/usr/bin/ffmpeg",
                         "-f", "image2",
                         "-hide_banner",
                         "-loglevel", "error",
@@ -434,10 +460,12 @@ def plot_acc_over_time(
             if not os.path.exists(acc_path): continue
             acc = xr.open_dataset(acc_path)[vname]
             x_range = np.arange(start=dt, stop=len(acc)*dt + 1, step=dt) / 24
+            print(x_range)
             if model_name in list(MODEL_NAME_PLOT_ARGS.keys()): kwargs = MODEL_NAME_PLOT_ARGS[model_name]
             else: kwargs = {"label": model_name}
             ax.plot(x_range, acc, **kwargs)
 
+        if not "x_range" in locals(): continue
         ax.grid()
         ax.set_ylabel("ACC")
         ax.set_xlabel("Lead time [days]")
