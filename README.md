@@ -22,7 +22,7 @@ If you find this work useful, please cite our paper
 To install the package, first create an environment, cd into it, and install the DLWPBench package via
 
 ```
-conda create -n dlwpbench netcdf4 python=3.11 numba==0.60.0 -y && conda activate dlwpbench
+conda create -n dlwpbench python=3.11 -y && conda activate dlwpbench
 pip install -e .
 ```
 
