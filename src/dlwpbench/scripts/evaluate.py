@@ -303,7 +303,6 @@ def build_dataset(
     def write_to_file(ds: xr.Dataset, dst_path_name: str, compress_dict: dict):
         if os.path.exists(dst_path_name): os.remove(dst_path_name)  # Delete file if it exists
         print(f"\tWriting to {dst_path_name}")
-        ds.to_netcdf(f"rand{randint}.nc", compute=False, encoding=compress_dict)
         if "outputs" in dst_path_name:  # Display progress bar when writing the targets.nc to file
             write_job = ds.to_netcdf(dst_path_name, compute=False, encoding=compress_dict)
             with ProgressBar(): write_job.compute()
@@ -394,7 +393,7 @@ def generate_mp4(
             plt.close()
 
         # Generate a video from the just generated frames with ffmpeg
-        subprocess.run(["/usr/bin/ffmpeg",
+        subprocess.run(["ffmpeg",  #"/usr/bin/ffmpeg",
                         "-f", "image2",
                         "-hide_banner",
                         "-loglevel", "error",
@@ -438,6 +437,7 @@ def plot_acc_over_time(
             else: kwargs = {"label": model_name}
             ax.plot(x_range, acc, **kwargs)
 
+        if not "x_range" in locals(): continue
         ax.grid()
         ax.set_ylabel("ACC")
         ax.set_xlabel("Lead time [days]")

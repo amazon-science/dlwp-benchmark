@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from .convlstm.convlstm import ConvLSTM, ConvLSTMHPX
-from .distana.distana import DISTANA
 from .fno.fno import FNO2DModule, TFNO2DModule, SFNO2DModule
 from .fourcastnet.fourcastnet import AFNONet as FourCastNet
 from .fourcastnet.fourcastnet import SFNONet as FourCastNetv2

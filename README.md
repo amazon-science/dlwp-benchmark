@@ -26,7 +26,7 @@ conda create -n dlwpbench python=3.11 -y && conda activate dlwpbench
 pip install -e .
 ```
 
-In the pip Neuraloperator package, the tucker decomposition for TFNO is not installed, so manually the package from the [source repository](https://github.com/NeuralOperator/neuraloperator) with
+In the pip Neuraloperator package, the tucker decomposition for TFNO is not installed, so manually install the package from the [source repository](https://github.com/NeuralOperator/neuraloperator) with
 
 ```
 mkdir packages
@@ -44,6 +44,7 @@ Moreover, install the `torch-harmonics` package for Spherical Fourier Neural Ope
 ```
 cd packages
 git clone https://github.com/NVIDIA/torch-harmonics.git
+git checkout 13aa492
 cd torch-harmonics
 pip install -e .
 cd ../..

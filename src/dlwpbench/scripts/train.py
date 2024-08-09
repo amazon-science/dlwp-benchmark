@@ -120,6 +120,7 @@ def run_training(cfg):
             prescribed = prescribed.to(device=device).split(split_size) if not prescribed.isnan().any() else None
             prognostic = prognostic.to(device=device).split(split_size)
             target = target.to(device=device).split(split_size)
+
             # Perform optimization step and record outputs
             optimizer.zero_grad()
             for accum_idx in range(len(prognostic)):

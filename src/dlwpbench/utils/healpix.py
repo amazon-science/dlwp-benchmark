@@ -31,25 +31,6 @@ import torch
 import torch as th
 from einops.layers.torch import Rearrange
 
-have_healpixpad = False
-try:
-    from healpixpad import HEALPixPad
-    have_healpixpad = True
-except ImportError:
-    #print("Warning, cannot find healpixpad module")
-    have_healpixpad = False
-
-
-# converts an NFCHW tensor to an NFHWC tensor
-@torch.jit.script
-def healpix_channels_first_to_channels_last(tensor):
-    N, F, C, H, W = tensor.shape
-    tensor = torch.permute(tensor, dims=(0, 1, 3, 4, 2))
-    tensor = torch.as_strided(tensor,
-                              size=(N, F, C, H, W),
-                              stride=(F*H*W*C, H*W*C, 1, W*C, C))
-    
-    return tensor
 
 # perform face folding:
 # [B, F, C, H, W] -> [B*F, C, H, W]
@@ -126,25 +107,6 @@ class HEALPixLayer(th.nn.Module):
         return res
 
 
-class HEALPixPaddingv2(th.nn.Module):
-    def __init__(self, padding: int):
-        super().__init__()
-        self.unfold = HEALPixUnfoldFaces(num_faces=12)
-        self.fold = HEALPixFoldFaces()
-        self.padding = HEALPixPad(padding=padding)
-
-    def forward(self, x):
-        torch.cuda.nvtx.range_push("HEALPixPaddingv2:forward")
-        
-        x = self.unfold(x)
-        xp = self.padding(x)
-        xp = self.fold(xp)
-        
-        torch.cuda.nvtx.range_pop()
-
-        return xp
-
-
 class HEALPixPadding(th.nn.Module):
     """
     Padding layer for data on a HEALPix sphere. The requirements for using this layer are as follows:
@@ -180,8 +142,7 @@ class HEALPixPadding(th.nn.Module):
         :param data: The input tensor of shape [..., F, H, W] where each face is to be padded in its HPX context
         :return: The padded tensor where each face's height and width are increased by 2*p
         """
-        torch.cuda.nvtx.range_push("HEALPixPadding:forward")
-        
+                
         # unfold faces from batch dim
         data = self.unfold(data)
         
@@ -210,8 +171,6 @@ class HEALPixPadding(th.nn.Module):
 
         # fold faces into batch dim
         res = self.fold(res)
-            
-        torch.cuda.nvtx.range_pop()
                 
         return res
 

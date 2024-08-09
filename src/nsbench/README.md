@@ -11,7 +11,7 @@ Create separate environment, cd into it and install the requirements with pip vi
 
 ```
 conda create -n nsgen python=3.7 -y && conda activate nsgen
-pip install torch==1.6.0 xarray[parallel] scipy einops tqdm matplotlib
+pip install torch==1.6.0 "xarray[parallel]" scipy einops tqdm matplotlib
 ```
 
 Subsequently, run the data generation script with
